@@ -12,7 +12,7 @@ std::complex<float> o std::complex<double>, para lo cual deberá entonces implem
 
 Pasos para ejecutar en Eclipse:
 
-1- Ir a Project - Properties - C/C++ Build - Settings.
+1. Ir a Project - Properties - C/C++ Build - Settings.
 2. Escribir en command:
 	g++ -std=c++11
 3. Abrir terminal e instalar la biblioteca Boost:
