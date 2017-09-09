@@ -16,5 +16,5 @@ Pasos para ejecutar en Eclipse:
 2. Escribir en command:
 	g++ -std=c++11
 3. Abrir terminal e instalar la biblioteca Boost:
-	sudo apt-get install libboost-all-dev
+	sudo apt-get install libboost-all-dev -No sirve esta putada .l.
 
