@@ -93,7 +93,6 @@ int main() {
 			cout << " ";
 		cout << x[i].imag() << "j" << endl;
 	}
-
 	return 0;
 }
 
