@@ -13,13 +13,19 @@ using boost::lexical_cast;
 
 
 int main() {
-	boost::array<double, 5> const d3a = {{13, 59, -16, -1, 1}};
-	polynomial<double> const a(d3a.begin(), d3a.end());
 	polynomial<double> b{{-2.0, 1.0}};
-	PolynomialDeflaction<double, 4> *pd;
-	//pd->deflate(a,-8,b);
+	PolynomialDeflaction<double, 10> *pd;
+
+	//Prueba para reacionales
+	boost::array<double, 10> const arr1 = {{-16, 2, 0, -8, 1}};
+	polynomial<double> const pol(arr1.begin(), arr1.end());
+	pd->deflate(pol,8,b);
+
+	//Prueba para irracionales
+	boost::array<double, 10> const arr2 = {{13, 59, -16, -1, 1}};
+	polynomial<double> const pol2(arr2.begin(), arr2.end());
 	complex<double> root(3,2);
-	pd->deflate2(a,root,b);
+	pd->deflate2(pol2,root,b);
 	return 0;
 }
 
