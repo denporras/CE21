@@ -43,7 +43,7 @@ polynomial<T> PolynomialDeflaction<T, N>::deflate(const polynomial<T>& poly, con
 	T tmp[n];
 	tmp[n-1] = poly[n-1];
 	for(int i=n-2; i>=0; i--){
-	      tmp[i] = poly[i] - tmp[i+1] * root;
+	      tmp[i] = poly[i] + tmp[i+1] * root;
 	}
 	for (int i=n-1; i>0; i--){
 		sol[i-1] = tmp[i];
@@ -64,19 +64,24 @@ polynomial<T> PolynomialDeflaction<T, N>::deflate2(const polynomial<T>& poly, co
 		complex<T>& root,const polynomial<T>& residuo){
 	int n = poly.size();
 	boost::array<T, N> sol = {};
-	T tmp[n];
+	complex<T> tmp[n];
 	tmp[n-1] = poly[n-1];
 	for(int i=n-2; i>=0; i--){
-	      tmp[i] = poly[i] - tmp[i+1] * root;
+		tmp[i] = poly[i] + tmp[i+1] * root;
 	}
+	complex<T> tmp2[n];
+	tmp2[n-1] = tmp[n-1];
+	complex<T> root2 = conj(root);
+	for(int i=n-2; i>=0; i--){
+		tmp2[i] = tmp[i] + tmp2[i+1] * root2;
+		}
 	for (int i=n-1; i>0; i--){
-		sol[i-1] = tmp[i];
+		sol[i-1] = real(tmp2[i]);
 	}
 	boost::array<T, 1> res = {};
-	res[0] = tmp[0];
+	res[0] = real(tmp2[0]);
 	polynomial<T> d3a(res.begin(), res.end());
 	cout << "Residuo = " << formula_format(d3a) << "\n";
-
 	polynomial<T> poly_sol(sol.begin(), sol.end());
 	cout << "Cociente = " << formula_format(poly_sol) << "\n";
 	return poly_sol;
