@@ -81,9 +81,9 @@ polynomial<T> PolynomialDeflaction<T, N>::deflate2(const polynomial<T>& poly, co
 	boost::array<T, 1> res = {};
 	res[0] = real(tmp2[0]);
 	polynomial<T> d3a(res.begin(), res.end());
-	cout << "Residuo = " << formula_format(d3a) << "\n";
+	//cout << "Residuo = " << formula_format(d3a) << "\n";
 	polynomial<T> poly_sol(sol.begin(), sol.end());
-	cout << "Cociente = " << formula_format(poly_sol) << "\n";
+	//cout << "Cociente = " << formula_format(poly_sol) << "\n";
 	return poly_sol;
 }
 
