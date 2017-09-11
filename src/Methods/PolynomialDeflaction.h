@@ -68,18 +68,16 @@ polynomial<T> PolynomialDeflaction<T, N>::deflate2(const polynomial<T>& poly, co
 	for(int i=n-2; i>=0; i--){
 		tmp[i] = poly[i] + tmp[i+1] * root;
 	}
-	complex<T> tmp2[n];
-	tmp2[n-1] = tmp[n-1];
+	complex<T> tmp2[n-1];
+	tmp2[n-2] = tmp[n-1];
 	complex<T> root2 = conj(root);
-	for(int i=n-2; i>=0; i--){
-		tmp2[i] = tmp[i] + tmp2[i+1] * root2;
+	for(int i=n-3; i>=0; i--){
+		tmp2[i] = tmp[i+1] + tmp2[i+1] * root2;
 		}
-	for (int i=n-1; i>0; i--){
+	for (int i=n-2; i>0; i--){
 		sol[i-1] = real(tmp2[i]);
 	}
-
 	residuo[0] = real(tmp2[0]);
-
 	cout << "Residuo = " << formula_format(residuo) << "\n";
 	polynomial<T> poly_sol(sol.begin(), sol.end());
 	cout << "Cociente = " << formula_format(poly_sol) << "\n";
