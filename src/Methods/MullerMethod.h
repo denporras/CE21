@@ -1,9 +1,10 @@
-/*
- * MullerMethod.h
- *
- *  Created on: 10 de set. de 2017
- *      Author: kevin
+/**
+ * @file MullerMethod.h
+ * @brief Class that implements the Muller method to find the roots of a polynomial.
+ * @author Kevin Alfaro
+ * @date 11 de sept. de 2017
  */
+
 
 #ifndef METHODS_MULLERMETHOD_H_
 #define METHODS_MULLERMETHOD_H_
@@ -31,6 +32,20 @@ public:
 	complex<T>* solvePolynomial(polynomial<T> &poly,T xr,T h, const bool &polish);
 };
 
+
+/**
+ * @brief Constructor by default.
+ */
+template<typename T>
+MullerMethod<T>::MullerMethod(){ }
+
+/**
+ * @brief Applies the Muller method to find all roots in the polynomial.
+ * @param poly: Polynomial.
+ * @param xr: Point of the parabole
+ * @param h: h to get the other two points of the parabole.
+ * @param polish: Activate or deactive root polish
+ */
 template<typename T>
 complex<T>* MullerMethod<T>::solvePolynomial(polynomial<T> &poly,T xr,T h, const bool &polish){
 
@@ -48,13 +63,13 @@ complex<T>* MullerMethod<T>::solvePolynomial(polynomial<T> &poly,T xr,T h, const
 
 		PolynomialDeflaction<T, 10> *pd; //Deflaction process to remove the root
 
-		//Check if the root has imaginary part
+		//Choose the correct deflate function depending if is a real or complex number
 		if(abs(imag(roots[i])) <= (T(2)*EPS*abs(real(roots[i])))){
 			temp_poly = pd->deflate(temp_poly,real(roots[i]),aux_poly);
 		}
 		else{
 			i++;
-			roots[i] = complex<T>(real(roots[i-1]),-1*imag(roots[i-1]));
+			roots[i] = complex<T>(real(roots[i-1]),-1*imag(roots[i-1]));//Add the conjugate to roots
 			temp_poly = pd->deflate2(temp_poly,roots[i-1],aux_poly);
 		}
 
@@ -63,6 +78,12 @@ complex<T>* MullerMethod<T>::solvePolynomial(polynomial<T> &poly,T xr,T h, const
 	return roots;
 }
 
+/**
+ * @brief Applies the Muller method to find a root in the polynomial.
+ * @param poly: Polynomial.
+ * @param xr: Point of the parabole
+ * @param h: h to get the other two points of the parabole.
+ */
 template<typename T>
 complex<T> MullerMethod<T>::getRoot(polynomial<T> &poly,T xr,T h){
 	const T EPS = pow(10,EPS_POW); //Estimated fractional roundoff error
@@ -134,6 +155,11 @@ complex<T> MullerMethod<T>::getRoot(polynomial<T> &poly,T xr,T h){
 	return x3;
 }
 
+/**
+ * @brief Evaluate a polynomial function as f(x)
+ * @param poly: Polynomial.
+ * @param x: Number to evaluate the function
+ */
 template<typename T>
 complex<T> MullerMethod<T>::evaluatePolynomial(polynomial<T> &poly, complex<T> x){
 	complex<T> result = 0;
