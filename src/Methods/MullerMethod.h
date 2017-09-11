@@ -33,9 +33,23 @@ public:
 
 template<typename T>
 complex<T>* MullerMethod<T>::solvePolynomial(polynomial<T> &poly,T xr,T h, const bool &polish){
-	complex<T> * roots = new complex<T>[poly.degree()-1];
 
-	roots[0] = this->getRoot(poly,xr,h);
+
+	polynomial<T> temp_poly = poly;
+	polynomial<T> aux_poly = poly;
+	complex<T> * roots = new complex<T>[poly.degree()];
+
+	for(int i = 0; i <= poly.degree()-1; i++){ //Loop to find every root.
+		roots[i] = this->getRoot(temp_poly,xr,h);
+
+		if(polish){ //Polish the roots
+			roots[i] = this->getRoot(temp_poly,roots[i].real(),h);
+		}
+
+		PolynomialDeflaction<T, 10> *pd; //Deflaction process to remove the root
+		temp_poly = pd->deflate2(temp_poly,roots[i],aux_poly);
+	}
+
 	return roots;
 }
 
@@ -48,8 +62,8 @@ complex<T> MullerMethod<T>::getRoot(polynomial<T> &poly,T xr,T h){
 
 	//Initial points of the parable
 	complex<T> x2 = x3;
-	complex<T> x1 = x3 + h*x3;
-	complex<T> x0 = x3 - h*x3;
+	complex<T> x1 = x3 + h;
+	complex<T> x0 = x3 - h;
 	//h and d coeficients
 	complex<T> h0 = 0;
 	complex<T> h1 = 0;
@@ -95,6 +109,11 @@ complex<T> MullerMethod<T>::getRoot(polynomial<T> &poly,T xr,T h){
 		x0 = x1;
 		x1 = x2;
 		x2 = x3;
+	}
+
+	//Check if the real part is too little
+	if(abs(imag(x3)) <= (T(2)*EPS*abs(real(x3)))){
+		x3 = complex<T>(real(x3),T(0));
 	}
 
 	return x3;
