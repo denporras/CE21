@@ -74,6 +74,7 @@ string formula_format(polynomial<T> const &a)
 int main() {
 
 	boost::array<double, 10> const arr1 = {{4,3,2,1}};
+
 	polynomial<double> pol(arr1.begin(), arr1.end());
 
 	//Metodo de Muller
