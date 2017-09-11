@@ -9,6 +9,7 @@
 #include <boost/math/tools/polynomial.hpp>
 #include <complex>
 #include "Methods/LaGuerreMethod.h"
+#include "Methods/MullerMethod.h"
 #include <cmath>
 #include <limits>
 #include <algorithm>
@@ -71,15 +72,29 @@ string formula_format(polynomial<T> const &a)
 } // string formula_format(polynomial<T> const &a)
 
 int main() {
-	//Creando el polinomio
-	boost::array<double, 10> const arr1 = {{1, 2, 3}};
+
+	boost::array<double, 10> const arr1 = {{1,2,3}};
 	polynomial<double> pol(arr1.begin(), arr1.end());
 
+	//Metodo de Muller
+	MullerMethod<double> *obj;
+	complex<double> * roots = new complex<double>[pol.degree()-1];
+	roots = obj->solvePolynomial(pol,5,0.22,true);
+
+	cout << "Real: " << roots->real() <<endl;
+	cout << "Imaginario: " << roots->imag() <<endl;
+
+
+
+	//Creando el polinomio
+	//boost::array<double, 10> const arr1 = {{1, 2, 3}};
+	//polynomial<double> pol(arr1.begin(), arr1.end());
+
 	//Metodo de LaGuerre
-	LaGuerreMethod<double> *obj;
+	LaGuerreMethod<double> *obj2;
 	const bool polish = true;
 	complex<double> x[7];
-	obj->solvePolynomial(pol, x, polish);
+	obj2->solvePolynomial(pol, x, polish);
 
 
 
@@ -93,6 +108,7 @@ int main() {
 			cout << " ";
 		cout << x[i].imag() << "j" << endl;
 	}
+
 	return 0;
 }
 
