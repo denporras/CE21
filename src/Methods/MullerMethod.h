@@ -9,7 +9,7 @@
 #define METHODS_MULLERMETHOD_H_
 
 #define MAX_ITERATION 80
-
+#define EPS_POW -3
 #include <complex>
 #include <cmath>
 #include <limits>
@@ -34,12 +34,12 @@ public:
 template<typename T>
 complex<T>* MullerMethod<T>::solvePolynomial(polynomial<T> &poly,T xr,T h, const bool &polish){
 
-
+	const T EPS = pow(10,EPS_POW); //Estimated fractional roundoff error
 	polynomial<T> temp_poly = poly;
 	polynomial<T> aux_poly = poly;
 	complex<T> * roots = new complex<T>[poly.degree()];
 
-	for(int i = 0; i <= poly.degree()-1; i++){ //Loop to find every root.
+	for(unsigned int i = 0; i <= poly.degree()-1; i++){ //Loop to find every root.
 		roots[i] = this->getRoot(temp_poly,xr,h);
 
 		if(polish){ //Polish the roots
@@ -47,7 +47,17 @@ complex<T>* MullerMethod<T>::solvePolynomial(polynomial<T> &poly,T xr,T h, const
 		}
 
 		PolynomialDeflaction<T, 10> *pd; //Deflaction process to remove the root
-		temp_poly = pd->deflate2(temp_poly,roots[i],aux_poly);
+
+		//Check if the root has imaginary part
+		if(abs(imag(roots[i])) <= (T(2)*EPS*abs(real(roots[i])))){
+			temp_poly = pd->deflate(temp_poly,real(roots[i]),aux_poly);
+		}
+		else{
+			i++;
+			roots[i] = complex<T>(real(roots[i-1]),-1*imag(roots[i-1]));
+			temp_poly = pd->deflate2(temp_poly,roots[i-1],aux_poly);
+		}
+
 	}
 
 	return roots;
@@ -55,7 +65,7 @@ complex<T>* MullerMethod<T>::solvePolynomial(polynomial<T> &poly,T xr,T h, const
 
 template<typename T>
 complex<T> MullerMethod<T>::getRoot(polynomial<T> &poly,T xr,T h){
-	const T EPS = pow(10,-3); //Estimated fractional roundoff error
+	const T EPS = pow(10,EPS_POW); //Estimated fractional roundoff error
 
 	//Reference x in complex format
 	complex<T> x3 = complex<T>(xr,T(0));
