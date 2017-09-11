@@ -72,41 +72,38 @@ string formula_format(polynomial<T> const &a)
 } // string formula_format(polynomial<T> const &a)
 
 int main() {
+/**
 	polynomial<double> b{{-1}};
-		PolynomialDeflaction<double, 10> *pd;
-
-		//Prueba para irracionales
-			boost::array<double, 10> const arr2 = {{-4, 5, -1, 1}};
-			polynomial<double> const pol2(arr2.begin(), arr2.end());
-			complex<double> root(0,2);
-			pd->deflate2(pol2,root,b);
-
-		//Prueba para reacionales
-		boost::array<double, 10> const arr1 = {{-16, 2, 0, -8, 1}};
-		polynomial<double> const pol(arr1.begin(), arr1.end());
-		pd->deflate(pol,8,b);
-
+	PolynomialDeflaction<double, 10> *pd;
+	//Prueba para irracionales
+	boost::array<double, 10> const arr2 = {{-4, 5, -1, 1}};
+	polynomial<double> const pol2(arr2.begin(), arr2.end());
+	complex<double> root(0,2);
+	pd->deflate2(pol2,root,b);
+	//Prueba para reacionales
+	boost::array<double, 10> const arr1 = {{-16, 2, 0, -8, 1}};
+	polynomial<double> const pol(arr1.begin(), arr1.end());
+	pd->deflate(pol,8,b);
+*/
 
 
 
-
-
-
-
-	/**
-	boost::array<double, 10> const arr1 = {{1,2,3}};
+	boost::array<double, 10> const arr1 = {{4,3,2,1}};
 	polynomial<double> pol(arr1.begin(), arr1.end());
 
 	//Metodo de Muller
 	MullerMethod<double> *obj;
-	complex<double> * roots = new complex<double>[pol.degree()-1];
-	roots = obj->solvePolynomial(pol,5,0.22,true);
+	complex<double> * roots = new complex<double>[pol.degree()];
+	roots = obj->solvePolynomial(pol,5,0.5,true);
 
-	cout << "Real: " << roots->real() <<endl;
-	cout << "Imaginario: " << roots->imag() <<endl;
+	for(unsigned int i = 0; i <= pol.degree()-1; i++){
+		cout << "Real: " << roots[i].real() <<"\n";
+		cout << "Imaginario: " << roots[i].imag() <<"\n";
+
+	}
 
 
-
+/**
 	//Creando el polinomio
 	//boost::array<double, 10> const arr1 = {{1, 2, 3}};
 	//polynomial<double> pol(arr1.begin(), arr1.end());
@@ -129,7 +126,9 @@ int main() {
 			cout << " ";
 		cout << x[i].imag() << "j" << endl;
 	}
+
 */
+
 	return 0;
 }
 

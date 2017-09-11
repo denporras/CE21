@@ -105,7 +105,7 @@ void LaGuerreMethod<T>::solvePolynomial(polynomial<T> &a, complex<T> * roots, co
 			x = complex<T>(real(x),T(0));
 		roots[j]=x;
 		PolynomialDeflaction<T, 10> *pd; //Se aplica deflacción
-		ad = pd->deflate2(ad,x,ad);
+		ad = pd->deflate2(ad,x,ad_v);
 	}
 
 	if (polish){ //Polish the roots
