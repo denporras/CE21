@@ -38,19 +38,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: CE3202-Project1-PolynomialSolve
+all: PolynomialSolve
 
 # Tool invocations
-CE3202-Project1-PolynomialSolve: $(OBJS) $(USER_OBJS)
+PolynomialSolve: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L/usr/include -o "CE3202-Project1-PolynomialSolve" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/include -o "PolynomialSolve" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) CE3202-Project1-PolynomialSolve
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) PolynomialSolve
 	-@echo ' '
 
 .PHONY: all clean dependents

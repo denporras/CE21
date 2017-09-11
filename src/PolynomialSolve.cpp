@@ -72,7 +72,6 @@ string formula_format(polynomial<T> const &a)
 } // string formula_format(polynomial<T> const &a)
 
 int main() {
-
 	boost::array<double, 10> const arr1 = {{1,2,3}};
 	polynomial<double> pol(arr1.begin(), arr1.end());
 

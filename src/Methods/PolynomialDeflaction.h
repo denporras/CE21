@@ -23,9 +23,9 @@ template<typename T, size_t N>
 class PolynomialDeflaction {
 public:
 	PolynomialDeflaction();
-	polynomial<T> deflate(const polynomial<T>& poly, const T& root,const polynomial<T>& residuo);
+	polynomial<T> deflate(const polynomial<T>& poly, const T& root,polynomial<T>& residuo);
 	polynomial<T> deflate2(const polynomial<T>& poly, const
-			complex<T>& root,const polynomial<T>& residuo);
+			complex<T>& root, polynomial<T>& residuo);
 private:
 	string sign_str(T const &x);
 	string inner_coefficient(T const &x);
@@ -37,7 +37,7 @@ PolynomialDeflaction<T, N>::PolynomialDeflaction() {
 }
 
 template<typename T, size_t N>
-polynomial<T> PolynomialDeflaction<T, N>::deflate(const polynomial<T>& poly, const T& root,const polynomial<T>& residuo){
+polynomial<T> PolynomialDeflaction<T, N>::deflate(const polynomial<T>& poly, const T& root, polynomial<T>& residuo){
 	int n = poly.size();
 	boost::array<T, N> sol = {};
 	T tmp[n];
@@ -48,10 +48,9 @@ polynomial<T> PolynomialDeflaction<T, N>::deflate(const polynomial<T>& poly, con
 	for (int i=n-1; i>0; i--){
 		sol[i-1] = tmp[i];
 	}
-	boost::array<T, 1> res = {};
-	res[0] = tmp[0];
-	polynomial<T> d3a(res.begin(), res.end());
-	cout << "Residuo = " << formula_format(d3a) << "\n";
+	residuo[0] = tmp[0];
+
+	cout << "Residuo = " << formula_format(residuo) << "\n";
 
 	polynomial<T> poly_sol(sol.begin(), sol.end());
 	cout << "Cociente = " << formula_format(poly_sol) << "\n";
@@ -61,7 +60,7 @@ polynomial<T> PolynomialDeflaction<T, N>::deflate(const polynomial<T>& poly, con
 
 template<typename T, size_t N>
 polynomial<T> PolynomialDeflaction<T, N>::deflate2(const polynomial<T>& poly, const
-		complex<T>& root,const polynomial<T>& residuo){
+		complex<T>& root, polynomial<T>& residuo){
 	int n = poly.size();
 	boost::array<T, N> sol = {};
 	complex<T> tmp[n];
@@ -78,12 +77,12 @@ polynomial<T> PolynomialDeflaction<T, N>::deflate2(const polynomial<T>& poly, co
 	for (int i=n-1; i>0; i--){
 		sol[i-1] = real(tmp2[i]);
 	}
-	boost::array<T, 1> res = {};
-	res[0] = real(tmp2[0]);
-	polynomial<T> d3a(res.begin(), res.end());
-	//cout << "Residuo = " << formula_format(d3a) << "\n";
+
+	residuo[0] = real(tmp2[0]);
+
+	cout << "Residuo = " << formula_format(residuo) << "\n";
 	polynomial<T> poly_sol(sol.begin(), sol.end());
-	//cout << "Cociente = " << formula_format(poly_sol) << "\n";
+	cout << "Cociente = " << formula_format(poly_sol) << "\n";
 	return poly_sol;
 }
 
