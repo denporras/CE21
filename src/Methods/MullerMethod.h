@@ -121,10 +121,15 @@ complex<T> MullerMethod<T>::getRoot(polynomial<T> &poly,T xr,T h){
 		x2 = x3;
 	}
 
-	//Check if the real part is too little
+	//Check if the imaginary part is too little
 	if(abs(imag(x3)) <= (T(2)*EPS*abs(real(x3)))){
 		x3 = complex<T>(real(x3),T(0));
 	}
+
+	//Check if the real part is too little
+		if(abs(real(x3)) <= (T(2)*EPS*abs(imag(x3)))){
+			x3 = complex<T>(T(0),imag(x3));
+		}
 
 	return x3;
 }

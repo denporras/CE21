@@ -88,7 +88,7 @@ int main() {
 
 
 
-	boost::array<double, 10> const arr1 = {{4,3,2,1}};
+	boost::array<double, 10> const arr1 = {{-8,-4,2,-1,1}};
 	polynomial<double> pol(arr1.begin(), arr1.end());
 
 	//Metodo de Muller
