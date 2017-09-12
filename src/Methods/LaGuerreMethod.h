@@ -100,12 +100,21 @@ void LaGuerreMethod<T>::solvePolynomial(polynomial<T> &a, complex<T> * roots, co
 	for(int j = m-1; j >= 0; j--){ //Loop to find every root.
 		x = T(0);//Zero to improve convergence.
 		polynomial<T> ad_v = ad;
+		if(ad_v.degree() == 0){
+			break;
+		}
 		this->process(ad_v, x, iterations);
 		if(abs(imag(x)) <= (T(2)*EPS*abs(real(x))))
 			x = complex<T>(real(x),T(0));
 		roots[j]=x;
 		PolynomialDeflaction<T, 10> *pd; //Se aplica deflacción
-		ad = pd->deflate2(ad,x,ad_v);
+		if(abs(imag(x)) < numeric_limits<T>::epsilon()){
+			cout << "real" << endl;
+			ad = pd->deflate(ad,real(x),ad_v);
+		}else{
+			cout << "complex" << endl;
+			ad = pd->deflate2(ad,x,ad_v);
+		}
 	}
 
 	if (polish){ //Polish the roots
