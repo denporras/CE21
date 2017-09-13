@@ -72,6 +72,23 @@ string formula_format(polynomial<T> const &a)
 } // string formula_format(polynomial<T> const &a)
 
 int main() {
+
+	boost::array<float, 10> const arr1 = {{-8,-4,2,-1,1}}; //(X-2)(x^2+4)(x+1)
+	polynomial<float> pol(arr1.begin(), arr1.end());
+
+	//Metodo de Muller
+	MullerMethod<float> *obj;
+	complex<float> * roots = new complex<float>[pol.degree()];
+	roots = obj->solvePolynomial(pol,5,0.5,false);
+
+	for(unsigned int i = 0; i <= pol.degree()-1; i++){
+		cout << setprecision(15);
+		cout << "Real: " << roots[i].real() <<"\n";
+		cout << "Imaginario: " << roots[i].imag() <<"\n";
+
+	}
+
+	/*
 	//Creando el polinomio
 	boost::array<double, 10> const arr1 = {{1,2,3,4,5,6,7}};
 	polynomial<double> pol(arr1.begin(), arr1.end());
@@ -94,6 +111,8 @@ int main() {
 			cout << " ";
 		cout << x[i].imag() << "j" << endl;
 	}
+
+	*/
 
 	return 0;
 }

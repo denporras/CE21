@@ -121,7 +121,8 @@ complex<T> MullerMethod<T>::getRoot(polynomial<T> &poly,T xr,T h){
 		a = (d1-d0)/(h1+h0);
 		b = a*h1 + d1;
 		c = this->evaluatePolynomial(poly,x2); //f(x2)
-		discriminant = b*b - 4.0*a*c;
+
+		discriminant = b*b - T(4)*a*c;
 		rad = std::sqrt(discriminant);
 
 		//Choose solution sign denominator
@@ -133,7 +134,7 @@ complex<T> MullerMethod<T>::getRoot(polynomial<T> &poly,T xr,T h){
 		}
 
 		// Calculate the next (x3) root
-		dx3 = (-2.0*c)/den;
+		dx3 = (T(-2)*c)/den;
 		x3 = x2 + dx3;
 
 		// Secuential method
