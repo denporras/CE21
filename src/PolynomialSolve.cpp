@@ -71,39 +71,9 @@ string formula_format(polynomial<T> const &a)
 	return result;
 } // string formula_format(polynomial<T> const &a)
 
-int main() {
-
-	boost::array<float, 10> const arr1 = {{-8,-4,2,-1,1}}; //(X-2)(x^2+4)(x+1)
-	polynomial<float> pol(arr1.begin(), arr1.end());
-
-	//Metodo de Muller
-	MullerMethod<float> *obj;
-	complex<float> * roots = new complex<float>[pol.degree()];
-	roots = obj->solvePolynomial(pol,5,0.5,false);
-
-	for(unsigned int i = 0; i <= pol.degree()-1; i++){
-		cout << setprecision(15);
-		cout << "Real: " << roots[i].real() <<"\n";
-		cout << "Imaginario: " << roots[i].imag() <<"\n";
-
-	}
-
-	/*
-	//Creando el polinomio
-	boost::array<double, 10> const arr1 = {{1,2,3,4,5,6,7}};
-	polynomial<double> pol(arr1.begin(), arr1.end());
-
-	//Metodo de LaGuerre
-	LaGuerreMethod<double> *obj2;
-	const bool polish = false;
-	complex<double> x[7];
-	obj2->solvePolynomial(pol, x, polish);
-
-
-
-	//Resultado
-	cout << "Polinomio: " << formula_format(pol) << endl << "Soluciones:" << endl;
-	for(int i=0; i < pol.degree(); i++){
+template <typename T>
+void printResult(T x[], int degree){
+	for(int i=0; i < degree; i++){
 		cout << "x_" << i+1 << " = " << x[i].real();
 		if(x[i].imag()>=0)
 			cout << " + ";
@@ -111,8 +81,34 @@ int main() {
 			cout << " ";
 		cout << x[i].imag() << "j" << endl;
 	}
+}
 
-	*/
+int main() {
+
+
+	//Creando el polinomio
+	boost::array<double, 10> const arr1 = {{1,2,3,4,5,6,7}};
+	polynomial<double> pol(arr1.begin(), arr1.end());
+
+	//Pulir?
+	bool polish = false;
+
+	//Metodo de LaGuerre
+	LaGuerreMethod<double> *obj2;
+	complex<double> x[10];
+	obj2->solvePolynomial(pol, x, polish);
+
+	//Metodo de Muller
+	MullerMethod<double> *obj;
+	complex<double> * roots = new complex<double>[10];
+	roots = obj->solvePolynomial(pol,5,0.5,polish);
+
+	//Resultado
+	cout << "Polinomio: " << formula_format(pol) << endl << "\nSoluciones:" << endl;
+	cout << "Método de LaGuerre: " << endl;
+	printResult(x,pol.degree());
+	cout << "Método de Muller" << endl;
+	printResult(roots, pol.degree());
 
 	return 0;
 }
