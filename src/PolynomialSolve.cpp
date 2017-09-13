@@ -73,12 +73,12 @@ string formula_format(polynomial<T> const &a)
 
 int main() {
 	//Creando el polinomio
-	boost::array<double, 10> const arr1 = {{1, 2, 3, 4, 5, 6}};
+	boost::array<double, 10> const arr1 = {{1,2,3,4,5,6,7}};
 	polynomial<double> pol(arr1.begin(), arr1.end());
 
 	//Metodo de LaGuerre
 	LaGuerreMethod<double> *obj2;
-	const bool polish = true;
+	const bool polish = false;
 	complex<double> x[7];
 	obj2->solvePolynomial(pol, x, polish);
 

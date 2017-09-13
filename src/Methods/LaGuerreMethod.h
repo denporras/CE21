@@ -109,11 +109,11 @@ void LaGuerreMethod<T>::solvePolynomial(polynomial<T> &a, complex<T> * roots, co
 		roots[j]=x;
 		PolynomialDeflaction<T, 10> *pd; //Se aplica deflacción
 		if(abs(imag(x)) < numeric_limits<T>::epsilon()){
-			cout << "real" << endl;
 			ad = pd->deflate(ad,real(x),ad_v);
 		}else{
-			cout << "complex" << endl;
 			ad = pd->deflate2(ad,x,ad_v);
+			roots[j-1] = conj(x);
+			j--;
 		}
 	}
 
@@ -130,13 +130,6 @@ void LaGuerreMethod<T>::solvePolynomial(polynomial<T> &a, complex<T> * roots, co
 			roots[i+1]=roots[i];
 		}
 		roots[i+1]=x;
-	}
-
-	for(int i = 1; i <= m-1; i++){ //The method does not verify if the root are equal, which means the imaginary part changes sign
-		if(abs(roots[i]-roots[i-1]) < numeric_limits<T>::epsilon()){
-			T tmp = roots[i].imag() * -1;
-			roots[i].imag(tmp);
-		}
 	}
 }
 
