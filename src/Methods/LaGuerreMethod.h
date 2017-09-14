@@ -16,6 +16,7 @@
 #include <complex>
 #include <cmath>
 #include <limits>
+#include <iostream>
 
 #include "PolynomialDeflaction.h"
 
@@ -113,6 +114,7 @@ void LaGuerreMethod<T>::solvePolynomial(polynomial<T> &a, complex<T> * roots,
 		if (abs(imag(x)) < numeric_limits<T>::epsilon()) {
 			ad = pd->deflate(ad, real(x), ad_v);
 		} else {
+			std::cout << "LAGUERRE: A complex root has been found!" << std::endl;
 			ad = pd->deflate2(ad, x, ad_v);
 			roots[j - 1] = conj(x);
 			j--;

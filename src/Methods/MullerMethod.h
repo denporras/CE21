@@ -69,6 +69,7 @@ complex<T>* MullerMethod<T>::solvePolynomial(polynomial<T> &poly, T xr, T h,
 			temp_poly = pd->deflate(temp_poly, real(roots[i]), aux_poly);
 		} else {
 			i++;
+			std::cout << "MULLER: A complex root has been found!" << std::endl;
 			roots[i] = complex<T>(real(roots[i - 1]), -1 * imag(roots[i - 1])); //Add the conjugate to roots
 			temp_poly = pd->deflate2(temp_poly, roots[i - 1], aux_poly);
 		}

@@ -11,7 +11,6 @@
 #ifndef POLYNOMIALSOLVE_H_
 #define POLYNOMIALSOLVE_H_
 
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
 #include <iostream>
 #include <boost/math/tools/polynomial.hpp>
